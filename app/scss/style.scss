@@ -41,6 +41,17 @@
 }
 
 /* burger menu */
+@keyframes slidein {
+    from {
+      margin-left: 100%;
+      width: 300%;
+    }
+  
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
+}
 .burger {
     display: none;
     z-index: 10;
@@ -58,6 +69,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    animation: 2s alternate slidein;
 }
 .burger__inner {
     height: 100vh;
