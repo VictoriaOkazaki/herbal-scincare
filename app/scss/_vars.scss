@@ -1,0 +1,50 @@
+$background-color: #ffffff;
+$main-font-color: #2C302B;
+$second-font-color: #205F11;
+
+%menu-font {
+    font-family: 'Mukta', sans-serif;
+    color: $main-font-color;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 30px;
+}
+%logo-font {
+    font-family: 'Mukta', sans-serif;
+    color: $main-font-color;
+    font-weight: 600;
+}
+%text-font {
+    color: $main-font-color;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 26px;
+    text-align: center;
+}
+
+%title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 59px;
+    text-align: center;
+    color: $main-font-color;
+    text-transform: uppercase;
+    text-align: center;
+}
+%good-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    color: $main-font-color;
+    text-transform: uppercase;
+}
+%section-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 0;
+}
