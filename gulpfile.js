@@ -8,6 +8,7 @@ const imagemin = require("gulp-imagemin");
 const htmlmin = require("gulp-htmlmin");
 const gzip = require('gulp-gzip');
 const del = require("del");
+const fileinclude = require('gulp-file-include');
 
 function browsersync() {
   browserSync.init({
@@ -39,10 +40,7 @@ function images() {
 function scripts() {
   return src([
       "node_modules/jquery/dist/jquery.js",
-      "app/js/modules/filter.js",
-      "app/js/modules/burger.js",
-      "app/js/modules/popup.js",
-      "app/js/modules/scroll.js",
+      "app/js/modules/**/*",
       "app/js/main.js"
     ])
     .pipe(concat("main.min.js"))
@@ -66,12 +64,16 @@ function styles() {
 }
 
 function html() {
-  return src("app/index.html")
+  return src("app/views/index.html")
+  .pipe(fileinclude({
+      prefix: '@@',
+      basepath: '@file'
+  }))
   .pipe(htmlmin({
     collapseWhitespace: true,
     removeComments: true
   }))
-  .pipe(dest("dist"));
+  .pipe(dest("app"));
 }
 
 function build() {
@@ -90,7 +92,7 @@ function build() {
 function watching() {
   watch(["app/scss/**/*.scss"], styles);
   watch(["app/js/**/*.js", "!app/js/main.min.js"], scripts);
-  watch(["app/*.html"]).on("change", browserSync.reload);
+  watch(["app/views/*.html"]).on("change", series(html, browserSync.reload));
 }
 
 exports.styles = styles;
@@ -102,4 +104,4 @@ exports.cleanDist = cleanDist;
 exports.html = html;
 
 exports.build = series(cleanDist, images, html, build);
-exports.default = parallel(styles, scripts, browsersync, watching);
+exports.default = parallel(html, styles, scripts, browsersync, watching);

@@ -1,29 +1,52 @@
 const filter = () => {
+    const onMobile = window.screen.width < 760;
+
+    const hideGoodsOnMobile = () => {
+        if (onMobile) {
+            const allGoods = document.querySelectorAll('.catalog__goods-item');
+
+            for (let i = 4; i < allGoods.length; i++) {
+                allGoods[i].classList.add('hide');
+            }
+        }
+    }
+
     const filterGoods = () => {
         const filters = document.querySelectorAll('.catalog__filters-item');
     
         filters.forEach(filter => { 
     
             filter.addEventListener('click', function() {
-    
-                let selectedFilter = filter.getAttribute('data-filter');
-                let itemsToHide = document.querySelectorAll(`.catalog__goods .catalog__goods-item:not([data-filter='${selectedFilter}'])`);
-                let itemsToShow = document.querySelectorAll(`.catalog__goods [data-filter='${selectedFilter}']`);
+                const selectedFilter = filter.getAttribute('data-filter');
+                let itemsToShow = [...document.querySelectorAll(`.catalog__goods [data-filter='${selectedFilter}']`)];
     
                 if (selectedFilter == 'all') {
-                itemsToHide = [];
-                itemsToShow = document.querySelectorAll('.catalog__goods [data-filter]');
+                    itemsToShow = [...document.querySelectorAll('.catalog__goods [data-filter]')];
                 }
+
+                if (onMobile) {
+                    const maxShowCount = itemsToShow.length < 4 ? itemsToShow.length : 4;
+                    itemsToShow = itemsToShow.slice(0, maxShowCount);
+                }
+
+                // console.log('-----------------');
     
-                itemsToHide.forEach(el => {
-                el.classList.add('hide');
-                el.classList.remove('show');
-                });
-    
-                itemsToShow.forEach(el => {
-                el.classList.remove('hide');
-                el.classList.add('show'); 
-                });
+                const visibleGoods = document.querySelectorAll('.catalog__goods-item.show');
+                for (const itemToHide of visibleGoods) {
+                    const index = itemsToShow.findIndex(item => {
+                        return item.dataset.id !== undefined && item.dataset.id === itemToHide.dataset.id;
+                    });
+                    if (index !== -1) continue;
+                    // console.log('hide', itemToHide.dataset.id, itemToHide.dataset.filter);
+                    itemToHide.classList.add('hide');
+                    itemToHide.classList.remove('show'); 
+                }
+
+                for (const itemToShow of itemsToShow) {
+                    // console.log('show', itemToShow.dataset.id, itemToShow.dataset.filter);
+                    itemToShow.classList.remove('hide');
+                    itemToShow.classList.add('show'); 
+                }
             });
         });
     }
@@ -43,6 +66,7 @@ const filter = () => {
         });
     };
 
+    hideGoodsOnMobile();
     filterGoods();
     changeFilter();
 }
