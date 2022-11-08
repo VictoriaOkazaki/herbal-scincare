@@ -325,6 +325,16 @@
         font-size: 14px;
         line-height: 16px;
     }
+    .cart__good {
+        margin-right: 0;
+    }
+    .good-added__btns {
+        flex-direction: column;
+        align-items: center;
+    }
+    .btn-2 {
+        margin-top: 10px;
+    }
 }
     @media (max-width:  760px) {
         .burger {
@@ -427,10 +437,13 @@
         .header__inner {
             justify-content: start;
         }
-        .header__img {
+        .header__cart {
             position: absolute;
-            right: 25%;
-            top: 15%;
+            top: 25%;
+            right: 30%;
+        }
+        .header__cart-amount {
+            border: 1px solid $second-font-color;
         }
         .home__text {
             margin: 30px 0 40px;
@@ -633,6 +646,28 @@
             width: 35px;
             height: 35px;
         }
+        .cart__good-img {
+            height: 70px;
+            max-width: 32px;
+          }
+        .cart__good-details {
+            display: flex;
+            flex-direction: column;
+            margin: 0 20px;
+        }
+        .cart__good-title {
+            font-size: 14px;
+            line-height: 16px;
+        }
+        .cart__good-text {
+            font-size: 12px;
+            line-height: 14px;
+            margin-top: 5px;
+        }
+        .cart__good-btn-img {
+            width: 25px;
+            height: 25px;
+        }
 }
 @media (max-width:  600px) {
     .popup__amount {
@@ -723,6 +758,42 @@
     .popup__filters-input:checked+label img {
         width: 12px;
         height: 12px;
+    }
+    /* cart */
+    .cart__good {
+        width: 180px;
+    }
+    .cart__good-img {
+        height: 60px;
+        max-width: 29px;
+      }
+    .cart__good-details {
+        display: flex;
+        flex-direction: column;
+        margin: 0 10px;
+    }
+    .cart__good-title {
+        font-size: 12px;
+        line-height: 14px;
+    }
+    .cart__good-text {
+        font-size: 10px;
+        line-height: 12px;
+    }
+    /* modal */
+    .popup__body-small {
+        width: 55%;
+        height: 25%;
+    }
+    .modal-btn {
+        font-size: 10px;
+        line-height: 12px;
+        padding: 4px 6px;
+        width: 100px;
+    }
+    .good-added__text {
+        font-size: 10px;
+        line-height: 12px;
     }
 }
 

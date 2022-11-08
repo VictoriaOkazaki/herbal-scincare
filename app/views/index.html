@@ -39,8 +39,9 @@
                 </li>
               </ul>
             </nav>
-            <a href="#good-cart" @click="isCartOpen = true">
+            <a href="#good-cart" @click="openCart" class="header__cart">
               <img src="images/cart.svg" alt="cart" class="header__img">
+              <span v-if="amountInCart != 0" class="header__cart-amount">{{amountInCart}}</span>
             </a>
             <button class="burger" id="burger">
               <img src="images/burger.svg" alt="burger button" class="burger__img">
@@ -327,6 +328,7 @@
               </label>
             </div>
             <div class="popup__filters-number">
+              <label class="popup__filters-label">amount</label>
               <button class="popup__filters-btn" id="popup-plus" @click="plusGoodCounter">
                 <img src="images/plus.svg" alt="plus" class="poup__filters-img">
               </button>
@@ -337,7 +339,7 @@
             </div>
           </div>
           <div class="popup__amount">
-            <h5 class="popup__amount-title">amount:</h5>
+            <h5 class="popup__amount-title">total:</h5>
             <span class="popup__amount-price">{{totalPrice}} $</span>
             <button class="popup__amount-btn" @click="addGoodToCart">
               <span class="popup__amount-add">add to cart</span>
@@ -350,13 +352,43 @@
     <div class="popup" id="good-cart" :class="{'popup-show': isCartOpen}">
       <div class="popup__overlay">
         <div class="popup__body">
-          <button @click="isCartOpen = false">Close</button>
-          <div v-for="good in cart">
-            <span>
-              title: {{good.title}}, count: {{good.count}}, total: {{good.price * good.count}}, type: {{good.type}},
-              volume: {{good.volume}}
-            </span>
-            <button @click="deleteGood(good)">Delete</button>
+          <a href="#" class="popup__close" @click="closeCart">
+            <img src="images/close.svg" alt="close button" class="popup__close-img">
+          </a>
+          <div class="cart__goods">
+            <div v-if="cart.length === 0" class="cart__empty">Cart is empty</div>
+            <div v-for="good in cart" class="cart__good">
+                <img :src="good.src" alt="" class="cart__good-img">
+                <div class="cart__good-details">
+                  <h5 class="cart__good-title">{{good.title}}</h5>
+                  <span class="cart__good-text">Volume: {{good.volume}} ml, Skin type: {{good.type}}</span>
+                  <span class="cart__good-text">Amount: {{good.count}}, {{good.price * good.count}}$</span>
+                </div>
+                <button @click="deleteGood(good)" class="cart__good-btn">
+                  <img src="images/delete-good.svg" alt="delete good" class="cart__good-btn-img">
+                </button>
+            </div>
+          </div>
+          <div class="popup__amount">
+            <h5 class="popup__amount-title">total:</h5>
+            <span class="popup__amount-price">{{totalCartPrice}} $</span>
+            <button class="popup__amount-btn">
+              <span class="popup__amount-add">place an order</span>
+              <img src="images/card.svg" alt="card" class="popup__amount-img">
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="popup" id="good-cart" :class="{'popup-show': isGoToCart}">
+      <div class="popup__overlay">
+        <div class="popup__body popup__body-small">
+          <div class="good-added__inner">
+            <span class="good-added__text">Item has been successfully added to cart 💚</span>
+            <div class="good-added__btns">
+              <button @click="openCartFromModal" class="modal-btn">go to cart</button>
+              <button @click="closeGoToCart" class="modal-btn btn-2">back to shop</button>
+            </div>
           </div>
         </div>
       </div>

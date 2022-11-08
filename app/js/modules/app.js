@@ -22,7 +22,8 @@ const createVueApp = () => {
                 cart: [],
                 radioVolume: '400',
                 radioType: 'normal',
-                isCartOpen: false
+                isCartOpen: false,
+                isGoToCart: false
             };
         },
         computed: {
@@ -47,6 +48,20 @@ const createVueApp = () => {
                     return 0;
                 }
                 return this.activeGood.price * this.goodCounter;
+            },
+            totalCartPrice() {
+                let res = 0;
+                for (const good of this.cart) {
+                    res += good.price * good.count;
+                }
+                return res;
+            },
+            amountInCart() {
+                let res = 0;
+                for (const good of this.cart) {
+                    res += good.count;
+                }
+                return res;
             }
         },
         created() {
@@ -75,6 +90,22 @@ const createVueApp = () => {
                     this.goodCounter--;
                 }
             },
+            openCart() {
+                this.isCartOpen = true;
+            },
+            closeCart() {
+                this.isCartOpen = false;
+            },
+            openGoToCart() {
+                this.isGoToCart = true;
+            },
+            closeGoToCart() {
+                this.isGoToCart = false;
+            },
+            openCartFromModal() {
+                this.closeGoToCart();
+                this.openCart();
+            },
             addGoodToCart() {
                 const goodInCart = this.cart.find(good => {
                     return good.id === this.activeGood.id && good.volume === this.radioVolume &&
@@ -91,6 +122,7 @@ const createVueApp = () => {
                     });
                 }
                 this.closePopup();
+                this.openGoToCart();
                 // console.log('cart', this.cart);
             },
             deleteGood(deleteGood) {

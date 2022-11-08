@@ -38,6 +38,23 @@
         width: 32px;
         height: 32px;
     }
+    &__cart {
+        position: relative;
+    }
+    &__cart-amount {
+        border-radius: 100%;
+        background: #ffffff;
+        position: absolute;
+        top: 50%;
+        left: 60%;
+        width: 18px;
+        height: 18px;
+        text-align: center;
+        font-family: 'Raleway', sans-serif;
+        font-size: 14px;
+        opacity: 0.8;
+        color: $main-font-color;
+    }
 }
 
 /* burger menu */
