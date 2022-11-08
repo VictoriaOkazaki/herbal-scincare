@@ -1,7 +1,9 @@
 try {
+    // Закомментировать тестовые товары при переносе на WordPress
+    initTestGoods();
+    createVueApp();
     scroll();
     filter();
-    popup();
     burger();
     loader();
 } catch (err) {

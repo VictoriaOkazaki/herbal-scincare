@@ -3,8 +3,6 @@ const burger = () => {
     const burgerWindow = document.querySelector('.burger__window');
     
     burger.addEventListener('click', () => {
-        console.log('click');
-        
         burgerWindow.classList.toggle('burger__window--active');
     });
 

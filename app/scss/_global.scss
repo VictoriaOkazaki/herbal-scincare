@@ -262,37 +262,38 @@ button {
 
 
 /* catalog filters animation*/
-.hide {
+.show-leave-active {
     animation: hide .4s ease 0s 1 normal forwards;
     transform-origin: center;
 }
-.show {
+
+.show-enter-active {
     animation: show .4s ease 0s 1 normal forwards;    
     transform-origin: center;
 }
-  
-  @keyframes hide {
-    0%{
-      transform: scale(1);        
-    }
-    100% {
-      transform: scale(0);        
-      width: 0;
-      height: 0;
-      margin: 0;
-    }
+
+@keyframes hide {
+  0%{
+    transform: scale(1);        
   }
-  @keyframes show {
-    0%{
-      transform: scale(0);     
-      width: 0;
-      height: 0;
-      margin: 0;   
-    }
-    100% {
-      transform: scale(1);    
-    }
+  100% {
+    transform: scale(0);        
+    width: 0;
+    height: 0;
+    margin: 0;
   }
+}
+@keyframes show {
+  0%{
+    transform: scale(0);     
+    width: 0;
+    height: 0;
+    margin: 0;   
+  }
+  100% {
+    transform: scale(1);    
+  }
+}
 
 /* loader */
 .loader-wrapper {

@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'development';
+
 const { src, dest, watch, parallel, series } = require("gulp");
 const scss = require("gulp-sass")(require("sass"));
 const concat = require("gulp-concat");
@@ -38,8 +40,15 @@ function images() {
 }
 
 function scripts() {
+  let vueScriptPath = "node_modules/vue/dist/vue.global.prod.js";
+
+  if (process.env.NODE_ENV === 'development') {
+    vueScriptPath = 'node_modules/vue/dist/vue.global.js'
+  }
+
   return src([
-      "node_modules/jquery/dist/jquery.js",
+      vueScriptPath,
+      // "node_modules/jquery/dist/jquery.js",
       "app/js/modules/**/*",
       "app/js/main.js"
     ])
@@ -76,6 +85,10 @@ function html() {
   .pipe(dest("app"));
 }
 
+function setProdEnv() {
+  process.env.NODE_ENV = 'production';
+}
+
 function build() {
   return src(
     [
@@ -103,5 +116,5 @@ exports.images = images;
 exports.cleanDist = cleanDist;
 exports.html = html;
 
-exports.build = series(cleanDist, images, html, build);
+exports.build = series(setProdEnv, cleanDist, images, html, build);
 exports.default = parallel(html, styles, scripts, browsersync, watching);
