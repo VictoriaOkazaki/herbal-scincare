@@ -387,6 +387,9 @@ button {
   background: none;
   color: $main-font-color;
   border: 1px solid $main-font-color;
+  &:hover {
+    background: none;
+  }
 }
 .good-added {
   &__inner {

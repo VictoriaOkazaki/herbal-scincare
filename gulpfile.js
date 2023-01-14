@@ -58,6 +58,42 @@ function scripts() {
     .pipe(browserSync.stream());
 }
 
+function payScripts() {
+  let vueScriptPath = "node_modules/vue/dist/vue.global.prod.js";
+
+  if (process.env.NODE_ENV === 'development') {
+    vueScriptPath = 'node_modules/vue/dist/vue.global.js'
+  }
+  
+  return src([ 
+    vueScriptPath,
+    "app/js/modules/**/*",
+    "app/js/pay.js"
+  ])
+  .pipe(concat("pay.min.js"))
+  .pipe(uglify())
+  .pipe(dest("app/js"))
+  .pipe(browserSync.stream());
+}
+
+function shopScripts() {
+  let vueScriptPath = "node_modules/vue/dist/vue.global.prod.js";
+
+  if (process.env.NODE_ENV === 'development') {
+    vueScriptPath = 'node_modules/vue/dist/vue.global.js'
+  }
+  
+  return src([ 
+    vueScriptPath,
+    "app/js/modules/**/*",
+    "app/js/shop.js"
+  ])
+  .pipe(concat("shop.min.js"))
+  .pipe(uglify())
+  .pipe(dest("app/js"))
+  .pipe(browserSync.stream());
+}
+
 function styles() {
   return src("app/scss/style.scss")
     .pipe(scss({ outputStyle: "compressed" }))
@@ -73,7 +109,11 @@ function styles() {
 }
 
 function html() {
-  return src("app/views/index.html")
+  return src([
+    "app/views/index.html",
+    "app/views/pay.html",
+    "app/views/shop.html"
+  ])
   .pipe(fileinclude({
       prefix: '@@',
       basepath: '@file'
@@ -102,19 +142,26 @@ function build() {
   ).pipe(dest("dist"));
 }
 
+const allScripts = series(scripts, payScripts, shopScripts);
+
 function watching() {
   watch(["app/scss/**/*.scss"], styles);
-  watch(["app/js/**/*.js", "!app/js/main.min.js"], scripts);
+  watch([
+    "app/js/**/*.js",
+    "!app/js/main.min.js",
+    "!app/js/pay.min.js",
+    "!app/js/shop.min.js"
+  ], allScripts);
   watch(["app/views/*.html"]).on("change", series(html, browserSync.reload));
 }
 
 exports.styles = styles;
 exports.watching = watching;
 exports.browsersync = browsersync;
-exports.scripts = scripts;
+exports.scripts = allScripts;
 exports.images = images;
 exports.cleanDist = cleanDist;
 exports.html = html;
 
 exports.build = series(setProdEnv, cleanDist, images, html, build);
-exports.default = parallel(html, styles, scripts, browsersync, watching);
+exports.default = parallel(html, styles, allScripts, browsersync, watching);

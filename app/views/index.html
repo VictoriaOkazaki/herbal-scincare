@@ -182,7 +182,7 @@
               </ul>
               <transition-group name="show" class="catalog__goods" tag="ul">
                 <li
-                    v-for="good in filterGoods"
+                    v-for="good in mainFilterGoods"
                     :key="good.id"
                     @click="onGoodClick(good)"
                     class="catalog__goods-item">
@@ -196,7 +196,7 @@
                     </a>
                 </li>
               </transition-group>
-              <a href="#" class="btn">shop more</a>
+              <a href="shop.html" class="btn">shop more</a>
             </div>
           </div>
         </section>
@@ -341,7 +341,7 @@
           <div class="popup__amount">
             <h5 class="popup__amount-title">total:</h5>
             <span class="popup__amount-price">{{totalPrice}} $</span>
-            <button class="popup__amount-btn" @click="addGoodToCart">
+            <button class="popup__amount-btn" @click.stop="addGoodToCart">
               <span class="popup__amount-add">add to cart</span>
               <img src="images/goods/cart.svg" alt="cart" class="popup__amount-img">
             </button>
@@ -372,7 +372,8 @@
           <div class="popup__amount">
             <h5 class="popup__amount-title">total:</h5>
             <span class="popup__amount-price">{{totalCartPrice}} $</span>
-            <button class="popup__amount-btn">
+            <button class="popup__amount-btn" @click="placeOrder"
+              :style="{ opacity: isCartEmpty ? 0.5 : 1 }">
               <span class="popup__amount-add">place an order</span>
               <img src="images/card.svg" alt="card" class="popup__amount-img">
             </button>
@@ -382,7 +383,7 @@
     </div>
     <div class="popup" id="good-cart" :class="{'popup-show': isGoToCart}">
       <div class="popup__overlay">
-        <div class="popup__body popup__body-small">
+        <div class="popup__body popup__body-small" v-click-outside="closeGoToCart">
           <div class="good-added__inner">
             <span class="good-added__text">Item has been successfully added to cart 💚</span>
             <div class="good-added__btns">

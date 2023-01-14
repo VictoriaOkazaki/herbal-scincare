@@ -1,0 +1,166 @@
+.pay-wrapper {
+    visibility: visible;
+}
+.pay-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 29px;
+    text-align: center;
+    text-transform: uppercase;
+    color: $main-font-color;
+    margin-top: 80px;
+}
+.delievery__top {
+    padding-top: 85px;
+}
+.delievery__top-text {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: $main-font-color;
+}
+.pay-form__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.pay-form__input {
+    width: 49%;
+}
+.catalog__goods-title {
+    text-align: center;
+}
+.catalog__filters {
+    display: flex;
+    justify-content: space-around;
+}
+.catalog__filters-item {
+    padding: 27px 45px;
+}
+.delievery__text {
+    margin: 50px 0 20px;
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    color: $second-font-color;
+}
+.delievery__options {
+    transition: all .5s ease;
+    height: 0;
+    overflow: auto;
+}
+.delievery__options--active {
+    height: 200px;
+}
+.delievery__option-front {
+    font-family: 'Raleway';
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.5);
+    padding: 27px 14px 27px;
+    border: 1px solid $main-font-color;
+    display: flex;
+    justify-content: space-between;
+}
+.delievery__option {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $main-font-color;
+    border-top: none;
+    &:hover {
+        background-color: rgba(32, 95, 17, 0.16);
+    }
+}
+.delievery__option-img {
+    transition: all .4s ease;
+}
+.delievery__option-img--active {
+    transform: rotateZ(180deg);
+}
+.delievery__title,
+.delievery__adress,
+.delievery__time {
+    font-family: 'Raleway', sans-serif;
+    text-align: left;
+    font-size: 20px;
+    line-height: 23px;
+    color: $main-font-color;
+}
+.delievery__title {
+    font-weight: 700;  
+}
+.delievery__adress {
+    font-weight: 400;
+    margin: 10px 0;
+}
+.delievery__time {
+    font-size: 18px;
+    line-height: 21px;
+    color: $second-font-color;
+}
+.pay__btn {
+    text-align: center;
+    margin-top: 80px;
+    padding: 25px 0 25px;
+}
+.pay-form__valid-error::after{
+    content: "*";
+    display: inline-block;
+    position: absolute;
+    margin-left: 5px;
+    width: 10px;
+    height: 10px;
+    color: red;
+}
+.pay-form__border-error {
+    border-color: red;
+}
+
+@media (max-width: 1400px) {
+    .btn {
+        // padding: 20px 60px !important;
+    }
+    .pay-title {
+        margin-top: 60px;
+    }
+}
+@media (max-width: 760px) {
+    .btn {
+        // padding: 11px 40px !important;
+    }
+    .pay-title {
+        margin-top: 50px;
+        font-size: 22px;
+        line-height: 25px;
+    }
+    .catalog__filters  {
+        display: flex;
+        flex-direction: column;
+    }
+    .pay-form__input {
+        width: 79%;
+    }
+}
+@media (max-width: 500px) {
+    .pay-title {
+        font-size: 20px;
+        line-height: 23px;
+    }
+    .delievery__top-text {
+        font-size: 16px;
+        line-height: 18px;
+    }
+    .delievery__text {
+        font-size: 16px;
+        line-height: 18px;
+    }
+}
