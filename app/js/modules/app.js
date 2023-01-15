@@ -42,42 +42,146 @@ const initTestGoods = () => {
     ]`);
 }
 
+const initTestArticles = () => {
+    window.articles = JSON.parse(
+        `[
+            { "id": 1, "date": "17 October, 2022", "src": "images/blog/blog-1.jpg", "title": "how to eat healthy and live not to eat", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut" },
+            { "id": 2, "date": "12 October, 2022", "src": "images/blog/blog-2.jpg", "title": "our new office in south carolina", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut"},
+            { "id": 3, "date": "5 October, 2022", "src": "images/blog/blog-3.jpg", "title": "which kinds of coffee is good for health", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut"},
+            { "id": 4, "date": "28 September, 2022", "src": "images/blog/blog-4.jpg", "title": "this plant is something fantastic", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut" },
+            { "id": 5, "date": "17 October, 2022", "src": "images/blog/blog-1.jpg", "title": "how to eat healthy and live not to eat", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut" },
+            { "id": 6, "date": "12 October, 2022", "src": "images/blog/blog-2.jpg", "title": "our new office in south carolina", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut"},
+            { "id": 7, "date": "5 October, 2022", "src": "images/blog/blog-3.jpg", "title": "which kinds of coffee is good for health", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut"},
+            { "id": 8, "date": "28 September, 2022", "src": "images/blog/blog-4.jpg", "title": "this plant is something fantastic", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut" },
+            { "id": 9, "date": "17 October, 2022", "src": "images/blog/blog-1.jpg", "title": "how to eat healthy and live not to eat", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut" },
+            { "id": 10, "date": "12 October, 2022", "src": "images/blog/blog-2.jpg", "title": "our new office in south carolina", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut"},
+            { "id": 11, "date": "5 October, 2022", "src": "images/blog/blog-3.jpg", "title": "which kinds of coffee is good for health", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut"},
+            { "id": 12, "date": "28 September, 2022", "src": "images/blog/blog-4.jpg", "title": "this plant is something fantastic", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut" }
+        ]`
+    )
+}
+
+const { ref, computed, onBeforeUnmount } = Vue;
+
+const useWindowSizes = () => {
+    const width = ref(window.screen.width);
+    const height = ref(window.screen.height);
+
+    const onResize = () => {
+        width.value = window.screen.width;
+        height.value = window.screen.height;
+    }
+
+    window.addEventListener("resize", onResize);
+
+    onBeforeUnmount(() => {
+        window.removeEventListener("resize", onResize);
+    });
+
+    return { width, height };
+}
+
+const useShowMore = (mainPageCount, mainPageMobileCount, increaseShowCount, items) => {
+    const curShowCount = ref(increaseShowCount);
+    const { width: screenWidth } = useWindowSizes();
+
+    const itemsForMainPage = computed(() => {
+        const onMobile = screenWidth.value < 760;
+        const itemsCount = onMobile ? mainPageMobileCount : mainPageCount;
+        const endIndex = items.value.length < itemsCount ? items.value.length : itemsCount;
+        return items.value.slice(0, endIndex);
+    });
+
+    const itemsForFullPage = computed(() => {
+        const endIndex = items.value.length < curShowCount.value ? items.value.length : curShowCount.value;
+        return items.value.slice(0, endIndex);
+    });
+
+    const showMoreBtn = computed(() => {
+        return curShowCount.value < items.value.length;
+    });
+
+    const increaseCurShowCount = () => {
+        curShowCount.value += increaseShowCount;
+    };
+
+    return { itemsForMainPage, itemsForFullPage, increaseCurShowCount, showMoreBtn };
+}
+
+const useGoodsFilter = (allGoods) => {
+    const filterType = ref('all');
+
+    const filterGoods = computed(() => {
+        let result = [];
+        if (filterType.value === 'all') {
+            result = allGoods.value;
+        } else {
+            result = allGoods.value.filter(good => good.filter === filterType.value);
+        }
+        return result;
+    });
+
+    const changeFilterType = (newFilterType) => {
+        filterType.value = newFilterType;
+    }
+
+    return { filterGoods, changeFilterType }
+}
+
 const createVueApp = () => {
     const app = Vue.createApp({
+        setup() {
+            const allGoods = ref(window.goods);
+            const articles = ref(window.articles);
+
+            const BLOG_INCREASE_COUNT = 4;
+            const BLOG_DESKTOP_COUNT = 4;
+            const BLOG_MOBILE_COUNT = 4;
+            const {
+                itemsForMainPage: mainArticles,
+                itemsForFullPage: blogArticles,
+                showMoreBtn: showMoreArticlesBtn,
+                increaseCurShowCount: showMoreArticles
+            } = useShowMore(BLOG_DESKTOP_COUNT, BLOG_MOBILE_COUNT, BLOG_INCREASE_COUNT, articles);
+
+            const { changeFilterType, filterGoods } = useGoodsFilter(allGoods);
+
+            const GOOD_INCREASE_COUNT = 12;
+            const GOOD_DESKTOP_COUNT = 8;
+            const GOOD_MOBILE_COUNT = 4;
+            const {
+                itemsForMainPage: mainFilterGoods,
+                itemsForFullPage: shopFilterGoods,
+                showMoreBtn: showMoreGoodsBtn,
+                increaseCurShowCount: showMoreGoods
+            } = useShowMore(GOOD_DESKTOP_COUNT, GOOD_MOBILE_COUNT, GOOD_INCREASE_COUNT, filterGoods);
+
+            return {
+                allGoods,
+                articles,
+                changeFilterType,
+                mainArticles,
+                blogArticles,
+                showMoreArticlesBtn,
+                showMoreArticles,
+                showMoreGoods,
+                showMoreGoodsBtn,
+                shopFilterGoods,
+                mainFilterGoods
+            };
+        },
         data() {
             return {
-                allGoods: [],
-                filterType: 'all',
                 activeGood: null,
                 goodCounter: 1,
                 cart: [],
                 radioVolume: '400',
                 radioType: 'normal',
                 isCartOpen: false,
-                isGoToCart: false
+                isGoToCart: false,
             };
         },
         computed: {
-            filterGoods() {
-                let result = [];
-                if (this.filterType === 'all') {
-                    result = this.allGoods;
-                } else {
-                    result = this.allGoods.filter(good => good.filter === this.filterType);
-                }
-                return result;
-            },
-            mainFilterGoods() {
-                const filterGoods = this.filterGoods;
-
-                const onMobile = window.screen.width < 760;
-
-                if (onMobile) {
-                    return filterGoods.slice(0, 4);
-                } else {
-                    return filterGoods.slice(0, 8);
-                }
-            },
             totalPrice() {
                 if (this.activeGood === null) {
                     return 0;
@@ -103,16 +207,10 @@ const createVueApp = () => {
             }
         },
         created() {
-            // Можно было написать this.goods = window.goods;
-            this.allGoods = window.goods.map(good => { return { ...good } });
             this.cart = JSON.parse(localStorage.getItem('cart') || '[]');
         },
         methods: {
-            changeFilterType(newFilterType) {
-                this.filterType = newFilterType;
-            },
             onGoodClick(good) {
-                // console.log('onGoodClick', good);
                 this.activeGood = good;
             },
             closePopup() {
@@ -139,7 +237,6 @@ const createVueApp = () => {
                 this.isGoToCart = true;
             },
             closeGoToCart() {
-                console.log('close');
                 this.isGoToCart = false;
             },
             openCartFromModal() {
@@ -163,7 +260,6 @@ const createVueApp = () => {
                 }
                 this.closePopup();
                 this.openGoToCart();
-                // console.log('cart', this.cart);
                 localStorage.setItem('cart', JSON.stringify(this.cart));
             },
             deleteGood(deleteGood) {

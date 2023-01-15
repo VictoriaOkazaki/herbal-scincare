@@ -1,6 +1,7 @@
 try {
     // Закомментировать тестовые товары при переносе на WordPress
     initTestGoods();
+    initTestArticles();
     createVueApp();
     scroll();
     filter();

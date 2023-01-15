@@ -51,7 +51,7 @@
                     </ul>
                     <transition-group name="show" class="catalog__goods" tag="ul">
                       <li
-                          v-for="good in filterGoods"
+                          v-for="good in shopFilterGoods"
                           :key="good.id"
                           @click="onGoodClick(good)"
                           class="catalog__goods-item">
@@ -65,6 +65,7 @@
                           </a>
                       </li>
                     </transition-group>
+                    <a v-show="showMoreGoodsBtn" @click="showMoreGoods" class="btn">show more</a>
                   </div>
                 </div>
             </section>

@@ -94,6 +94,24 @@ function shopScripts() {
   .pipe(browserSync.stream());
 }
 
+function blogScripts() {
+  let vueScriptPath = "node_modules/vue/dist/vue.global.prod.js";
+
+  if (process.env.NODE_ENV === 'development') {
+    vueScriptPath = 'node_modules/vue/dist/vue.global.js'
+  }
+  
+  return src([ 
+    vueScriptPath,
+    "app/js/modules/**/*",
+    "app/js/blog.js"
+  ])
+  .pipe(concat("blog.min.js"))
+  .pipe(uglify())
+  .pipe(dest("app/js"))
+  .pipe(browserSync.stream());
+}
+
 function styles() {
   return src("app/scss/style.scss")
     .pipe(scss({ outputStyle: "compressed" }))
@@ -112,7 +130,8 @@ function html() {
   return src([
     "app/views/index.html",
     "app/views/pay.html",
-    "app/views/shop.html"
+    "app/views/shop.html",
+    "app/views/blog.html"
   ])
   .pipe(fileinclude({
       prefix: '@@',
@@ -142,7 +161,7 @@ function build() {
   ).pipe(dest("dist"));
 }
 
-const allScripts = series(scripts, payScripts, shopScripts);
+const allScripts = series(scripts, payScripts, shopScripts, blogScripts);
 
 function watching() {
   watch(["app/scss/**/*.scss"], styles);
@@ -150,7 +169,8 @@ function watching() {
     "app/js/**/*.js",
     "!app/js/main.min.js",
     "!app/js/pay.min.js",
-    "!app/js/shop.min.js"
+    "!app/js/shop.min.js",
+    "!app/js/blog.min.js"
   ], allScripts);
   watch(["app/views/*.html"]).on("change", series(html, browserSync.reload));
 }

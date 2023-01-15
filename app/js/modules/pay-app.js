@@ -120,7 +120,6 @@ const createVueAppPay = () => {
                     valid = false;
                 }
                 if (!valid) return;
-                // localStorage.removeItem('cart');
                 let message = `Client: ${this.firstName} ${this.lastName}, phone: ${this.phone}\n`
                 message += 'Cart:\n';
                 message += this.cart.map(el => `\tTitle: ${el.title}, Price: ${el.price}, Type: ${el.type}, Volume: ${el.volume}, Count: ${el.count}`).join('\n');
@@ -135,7 +134,8 @@ const createVueAppPay = () => {
                 console.log(message);
                 // Делаем кнопку неактивной, когда уже отправили на сервер данные
                 // Но если данные на сервер не отправили, например, ошибка сети, то не очищаем, чтобы можно было отправить снова
-                // this.cart = [];
+                localStorage.removeItem('cart');
+                this.cart = [];
             }
         }
     });

@@ -205,14 +205,17 @@
             <div class="blog__inner">
               <h2 class="blog__title">take a cup of coffee and read our blog☕</h2>
               <ul class="blog__articles">
-                @@loop('./articles-item.html', [
-                  {  "date": "17 October, 2022", "src": "images/blog/blog-1.jpg", "title": "how to eat healthy and live not to eat", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut" },
-                  {  "date": "12 October, 2022", "src": "images/blog/blog-2.jpg", "title": "our new office in south carolina", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut"},
-                  {  "date": "5 October, 2022", "src": "images/blog/blog-3.jpg", "title": "which kinds of coffee is good for health", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut"},
-                  {  "date": "28 September, 2022", "src": "images/blog/blog-4.jpg", "title": "this plant is something fantastic", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut" }
-                ])
+                <li v-for="article in mainArticles" :key="article.id" class="blog__articles-item">
+                  <a href="#" class="blog__articles-link">
+                      <span class="blog__articles-date">{{article.date}}</span>
+                      <img :src="article.src" alt="" class="blog__articles-img">
+                      <h3 class="blog__articles-title">{{article.title}}</h3>
+                      <p class="blog__articles-text">{{article.text}}</p>
+                      <a href="blog.html" class="blog__articles-read">read more</a>
+                  </a>
+                </li>
               </ul>
-              <a href="#" class="btn">read more</a>
+              <a href="blog.html" class="btn">read more</a>
             </div>
           </div>
         </section>

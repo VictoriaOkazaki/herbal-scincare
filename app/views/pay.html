@@ -42,7 +42,7 @@
                     <selector :points="pickupPoints" :title="selectTitle" :error="isDelieveryError" @change-point="chooseActivePoint" />
                  </div>
                  <div v-else-if="delieveryType === 1" class="delievery-courier">
-                    <div class="form__form pay-form__form">
+                    <div class="form__form pay-form__form" style="margin-top: 0;">
                         <app-input v-model="courierAdress" placeholder="City, street, block, apartment" :error="isDelieveryError" :clearerror="() => { isDelieveryError = false; }"></app-input>
                     </div>
                  </div>
