@@ -61,7 +61,7 @@ const initTestArticles = () => {
     )
 }
 
-const { ref, computed, onBeforeUnmount } = Vue;
+const { ref, computed, onBeforeUnmount, watch } = Vue;
 
 const useWindowSizes = () => {
     const width = ref(window.screen.width);
@@ -105,7 +105,11 @@ const useShowMore = (mainPageCount, mainPageMobileCount, increaseShowCount, item
         curShowCount.value += increaseShowCount;
     };
 
-    return { itemsForMainPage, itemsForFullPage, increaseCurShowCount, showMoreBtn };
+    const setStartShowCount = () => {
+        curShowCount.value = increaseShowCount;
+    };
+
+    return { itemsForMainPage, itemsForFullPage, increaseCurShowCount, showMoreBtn, setStartShowCount };
 }
 
 const useGoodsFilter = (allGoods) => {
@@ -125,7 +129,7 @@ const useGoodsFilter = (allGoods) => {
         filterType.value = newFilterType;
     }
 
-    return { filterGoods, changeFilterType }
+    return { filterType, filterGoods, changeFilterType }
 }
 
 const createVueApp = () => {
@@ -144,7 +148,7 @@ const createVueApp = () => {
                 increaseCurShowCount: showMoreArticles
             } = useShowMore(BLOG_DESKTOP_COUNT, BLOG_MOBILE_COUNT, BLOG_INCREASE_COUNT, articles);
 
-            const { changeFilterType, filterGoods } = useGoodsFilter(allGoods);
+            const { filterType, changeFilterType, filterGoods } = useGoodsFilter(allGoods);
 
             const GOOD_INCREASE_COUNT = 12;
             const GOOD_DESKTOP_COUNT = 8;
@@ -153,8 +157,13 @@ const createVueApp = () => {
                 itemsForMainPage: mainFilterGoods,
                 itemsForFullPage: shopFilterGoods,
                 showMoreBtn: showMoreGoodsBtn,
-                increaseCurShowCount: showMoreGoods
+                increaseCurShowCount: showMoreGoods,
+                setStartShowCount: setStartGoodsShowCount
             } = useShowMore(GOOD_DESKTOP_COUNT, GOOD_MOBILE_COUNT, GOOD_INCREASE_COUNT, filterGoods);
+
+            watch(filterType, () => {
+                setStartGoodsShowCount();
+            });
 
             return {
                 allGoods,
