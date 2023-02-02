@@ -428,6 +428,69 @@
         margin-top: 30px;
     }
 }
+
+.post {
+    margin-top: 70px;
+    &-top,
+    &__comment {
+        padding: 0 138px;
+    }
+    &-top {
+        text-align: right;
+        padding: 0 138px;
+    }
+    &__img {
+        width: 100%;
+        height: 484px;
+        object-fit: cover;
+    }
+    &__date {
+        margin-top: 50px;
+        font-family: 'Raleway', sans-serif;
+        font-style: italic;
+        font-weight: 300;
+        font-size: 20px;
+        line-height: 23px;
+        text-align: right;
+        color: $second-font-color;
+    }
+    &__content {
+        margin-top: 100px;
+    }
+    &__content-title {
+        @extend %title;
+        margin-bottom: 50px;
+    }
+    &__content-text {
+        @extend %text-font;
+        text-align: justify;
+    }
+    &__comment {
+        margin-top: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 95px;
+    }
+    &__comment-title {
+        @extend %title;
+        font-size: 35px;
+        line-height: 41px;
+    }
+    &__comment-text {
+        margin: 50px 0;
+        width: 100%;
+        border: none;
+        padding: 20px;
+        resize: none;
+        color: $main-font-color;
+        &:focus {
+           outline: 0;
+        }
+    }
+}
+
 .contacts {
     margin-top: 40px;
     &__inner {
@@ -439,7 +502,7 @@
     &__list {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-gap: 110px;
+        grid-gap: 60px;
         margin: 80px 0;
     }
     &__item {
@@ -541,7 +604,10 @@ input.btn {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 60%;
+    }
+    &__copyright {
+        position: absolute;
+        left: 50%;
     }
     &__to-top {
         &:hover {

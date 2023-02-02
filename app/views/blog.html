@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H&S. Blog</title>
+    <title>H&S | Blog</title>
     <link rel="stylesheet" href="css/style.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,14 +12,70 @@
 </head>
 <body>
     <div id="app" class="wrapper">
-        <div class="container" style="background: rgba(102, 102, 102, 0.2);">
-            <header>
-              <div class="header__inner">
-                <a href="index.html">
-                  <span class="header__logo">h&s</span>
-                </a>
-              </div>
-            </header>
+        <div class="container" style="background: rgba(102, 102, 102, 0.12);">
+          <header>
+            <div class="container">
+                <div class="header__inner">
+                    <a href="index.html">
+                      <span class="header__logo">h&s</span>
+                    </a>
+                    <nav class="header__menu">
+                      <ul class="header__menu-list">
+                        <li class="header__menu-item">
+                          <a href="index.html">Home</a>
+                        </li>
+                        <li class="header__menu-item">
+                          <a href="shop.html">Catalogue</a
+                            ></li>
+                        <li class="header__menu-item">
+                          <a href="#">Blog</a></li>
+                      </ul>
+                    </nav>
+                    <a href="#good-cart" @click="openCart" class="header__cart">
+                      <img src="images/cart.svg" alt="cart" class="header__img">
+                      <span v-if="amountInCart != 0" class="header__cart-amount">{{amountInCart}}</span>
+                    </a>
+                    <button class="burger" id="burger">
+                      <img src="images/burger.svg" alt="burger button" class="burger__img">
+                    </button>
+                  </div>
+            </div>
+        </header>
+        <div class="burger__window">
+            <div class="container">
+                <div class="container">
+                    <div class="burger__inner">
+                      <div class="burger__menu-container">
+                        <nav class="burger__menu">
+                          <ul class="header__menu-list">
+                            <li class="header__menu-item">
+                              <a href="index.html">Home</a>
+                            </li>
+                            <li class="header__menu-item">
+                              <a href="shop.html">Catalogue</a
+                                ></li>
+                            <li class="header__menu-item">
+                              <a href="#">Blog</a></li>
+                          </ul>
+                        </nav>
+                      </div>
+                      <div class="burger__menu-contacts">
+                        <img src="../images/tube.png" alt="" class="burger__menu-tube">
+                        <a href="tel:6624882708" class="contacts__link burger__contacts-link">662-488-2708</a>
+                        <a href="mailto:info@hns.com" class="contacts__link burger__contacts-link">info@hns.com</a>
+                        <ul class="burger__social">
+                          @@loop('./social-item.html', [
+                            { "href": "https://twitter.com", "src": "images/contacts/twitter.svg", "alt": "twitter" },
+                            { "href": "https://pinterest.com", "src": "images/contacts/pinterest.svg", "alt": "pinterest" },
+                            { "href": "https://facebook.com", "src": "images/contacts/facebook.svg", "alt": "facebook" },
+                            { "href": "https://instagram.com", "src": "images/contacts/instagram.svg", "alt": "instagram" }
+                          ])
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
           </div>
         <section class="blog" id="blog" style="margin-top: 0;">
             <div class="container">
@@ -27,12 +83,12 @@
                 <h2 class="blog__title">take a cup of coffee and read our blog☕</h2>
                 <ul class="blog__articles">
                   <li v-for="article in blogArticles" :key="article.id" class="blog__articles-item">
-                    <a href="#" class="blog__articles-link">
+                    <a href="blog-single.html" class="blog__articles-link">
                         <span class="blog__articles-date">{{article.date}}</span>
                         <img :src="article.src" alt="" class="blog__articles-img">
                         <h3 class="blog__articles-title">{{article.title}}</h3>
                         <p class="blog__articles-text">{{article.text}}</p>
-                        <a href="blog.html" class="blog__articles-read">read more</a>
+                        <a class="blog__articles-read">read more</a>
                     </a>
                   </li>
                 </ul>
@@ -40,6 +96,21 @@
               </div>
             </div>
         </section>
+        <footer class="footer">
+          <div class="container">
+            <div class="footer__inner">
+              <div class="footer__container">
+                <a href="index.html">
+                  <img src="images/logo.svg" alt="" class="footer__logo">
+                </a>
+                <p class="footer__copyright">H&S Co. 2022 All rights reserved</p>
+              </div>
+              <a href="#app" class="footer__to-top">
+                <img src="images/to-top.svg" alt="" class="footer__to-top-img">
+              </a>
+            </div>
+          </div>
+        </footer>
         <div class="loader-wrapper">
             <div class="loader"></div>
         </div>

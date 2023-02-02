@@ -206,12 +206,12 @@
               <h2 class="blog__title">take a cup of coffee and read our blog☕</h2>
               <ul class="blog__articles">
                 <li v-for="article in mainArticles" :key="article.id" class="blog__articles-item">
-                  <a href="#" class="blog__articles-link">
+                  <a href="blog-single.html" class="blog__articles-link">
                       <span class="blog__articles-date">{{article.date}}</span>
                       <img :src="article.src" alt="" class="blog__articles-img">
                       <h3 class="blog__articles-title">{{article.title}}</h3>
                       <p class="blog__articles-text">{{article.text}}</p>
-                      <a href="blog.html" class="blog__articles-read">read more</a>
+                      <a class="blog__articles-read">read more</a>
                   </a>
                 </li>
               </ul>
@@ -281,7 +281,9 @@
         <div class="container">
           <div class="footer__inner">
             <div class="footer__container">
-              <img src="images/logo.svg" alt="" class="footer__logo">
+              <a href="#">
+                <img src="images/logo.svg" alt="" class="footer__logo">
+              </a>
               <p class="footer__copyright">H&S Co. 2022 All rights reserved</p>
             </div>
             <a href="#home" class="footer__to-top">
