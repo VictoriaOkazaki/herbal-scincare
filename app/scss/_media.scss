@@ -194,6 +194,9 @@
         top: 10px;
         right: 10px;
     }
+    .post-top, .post__comment {
+        padding: 0 0;
+    }
 }
 @media (max-width:  1000px) {
     .container {
@@ -331,6 +334,39 @@
     }
     .btn-2 {
         margin-top: 10px;
+    }
+    .post {
+        margin-top: 50px;
+    }
+    .post__date {
+        margin-top: 30px;
+        font-size: 20px;
+        line-height: 23px;
+    }
+    .post__content {
+        margin-top: 60px;
+    }
+    .post__content-title {
+        margin-bottom: 30px;
+        font-size: 30px;
+        line-height: 36px;
+    }
+    .post__content-text {
+        font-size: 20px;
+        line-height: 23px;
+    }
+    .post__comment {
+        margin-top: 150px;
+    }
+    .post__comment-title {
+        font-size: 27px;
+        line-height: 31px;
+    }
+    .post__comment-text {
+        margin: 30px 0;
+    }
+    .post__img {
+        height: 281px;
     }
 }
     @media (max-width:  760px) {
@@ -679,6 +715,39 @@
         top: 8px;
         right: 8px;
     }
+    .post__img {
+        height: 165px;
+    }
+    .post {
+        margin-top: 40px;
+    }
+    .post__date {
+        margin-top: 20px;
+        font-size: 18px;
+        line-height: 20px;
+    }
+    .post__content {
+        margin-top: 40px;
+    }
+    .post__content-title {
+        margin-bottom: 20px;
+        font-size: 25px;
+        line-height: 29px;
+    }
+    .post__content-text {
+        font-size: 20px;
+        line-height: 23px;
+    }
+    .post__comment {
+        margin-top: 120px;
+    }
+    .post__comment-title {
+        font-size: 22px;
+        line-height: 26px;
+    }
+    .post__comment-text {
+        margin: 20px 0;
+    }
 }
 
 @media (max-width:  500px) {
@@ -920,6 +989,19 @@
     .popup__amount-btn {
         margin-left: 10px;
     }
+    .post__content-text, 
+    .post__date,
+    .post__comment-title {
+        font-size: 18px;
+        line-height: 21px;
+    }
+    .post__content-title {
+        font-size: 23px;
+        line-height: 28px;
+    }
+    .post__comment-text {
+        padding: 10px;
+    }
 }
 @media (max-width:  320px) {
     .popup__amount {
@@ -929,6 +1011,19 @@
     .popup__amount-price,
     .popup__amount-btn {
         margin-left: 0;
+    }
+    .post__img {
+        height: 125px;
+    }
+    .post__content-text, 
+    .post__date,
+    .post__comment-title {
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .post__content-title {
+        font-size: 21px;
+        line-height: 26px;
     }
 }
 @media (max-width:  296px) {
